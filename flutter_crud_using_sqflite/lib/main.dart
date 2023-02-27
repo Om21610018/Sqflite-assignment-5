@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _journals = [];
 
   bool _isLoading = true;
+
   void _refreshJournals() async {
     final data = await SQLHelper.getItems();
     setState(() {
@@ -60,25 +61,32 @@ class _HomePageState extends State<HomePage> {
     _refreshJournals();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Phone Book',style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
+        title: const Text(
+          'Phone Book',
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         toolbarHeight: 150,
-        shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(30))),
       ),
-
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : _journals.isEmpty
-              ?  Center(
-                  child:Column(
+              ? Center(
+                  child: Column(
                   children: [
-                       SizedBox(height: 100,),
-                        Lottie.asset('assets/calls.json',height: 350,width: 450,fit: BoxFit.fill)
+                    SizedBox(
+                      height: 100,
+                    ),
+                    Lottie.asset('assets/calls.json',
+                        height: 350, width: 450, fit: BoxFit.fill)
                   ],
-
-                  ))
+                ))
               : ListView.builder(
                   itemCount: _journals.length,
                   itemBuilder: (context, index) {
@@ -142,30 +150,34 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(7.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            _journals[index]['address'],
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 49, 48, 48)),
-                                          ),
-                                          Text(
-                                            _journals[index]['landmark'],
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 49, 48, 48)),
-                                          ),
-                                          Text(
-                                            " - " + _journals[index]['pincode'],
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 49, 48, 48)),
-                                          ),
-                                        ],
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              _journals[index]['address'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Color.fromARGB(
+                                                      255, 49, 48, 48)),
+                                            ),
+                                            Text(
+                                              _journals[index]['landmark'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Color.fromARGB(
+                                                      255, 49, 48, 48)),
+                                            ),
+                                            Text(
+                                              " - " +
+                                                  _journals[index]['pincode'],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Color.fromARGB(
+                                                      255, 49, 48, 48)),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
